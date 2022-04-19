@@ -30,27 +30,27 @@ zobrazUkoly();
 
 // funkce pro načtení seznamu úkolů z Local Storage
 function nactiUkoly() {
-	let hodnota = localStorage.ukoly;
+  let hodnota = localStorage.ukoly;
 
-	if(hodnota === null || hodnota === undefined) {
-		ukoly = [];
-	} else {
-		ukoly = JSON.parse(hodnota);
-	}
+  if (hodnota === null || hodnota === undefined) {
+    ukoly = [];
+  } else {
+    ukoly = JSON.parse(hodnota);
+  }
 
 }
 
 // funkce pro uložení seznamu úkolů do Local Storage
 function ulozUkoly() {
 
-	seznam.innerHTML = '';
+  seznam.innerHTML = '';
 
-	if (ukoly.length > 0) {
-		for(let i = 0; i < ukoly.length; i++) {
-			let ukol = vytvorPrvekUkolu(i, ukoly[i].popis, ukoly[i].dulezitost);
-			seznam.appendChild(ukol);
-		}
-	}
+  if (ukoly.length > 0) {
+    for (let i = 0; i < ukoly.length; i++) {
+      let ukol = vytvorPrvekUkolu(i, ukoly[i].popis, ukoly[i].dulezitost);
+      seznam.appendChild(ukol);
+    }
+  }
 }
 
 
@@ -58,48 +58,48 @@ function ulozUkoly() {
 // jako parametry očekává index úkolu v poli, popis a důležitost úkolu
 function vytvorPrvekUkolu(index, popis, dulezitost) {
 
-	let liElement = document.createElement('li');
-	liElement.textContent = `${popis} - ${dulezitost} důležitost`;
+  let liElement = document.createElement('li');
+  liElement.textContent = `${popis} - ${dulezitost} důležitost`;
 
-	let buttonElement = document.createElement('button');
-	buttonElement.textContent = 'x';
-	buttonElement.dataset.index = index;
-	buttonElement.onclick = odstranUkol;
+  let buttonElement = document.createElement('button');
+  buttonElement.textContent = 'x';
+  buttonElement.dataset.index = index;
+  buttonElement.onclick = odstranUkol;
 
-	liElement.appendChild(buttonElement);
+  liElement.appendChild(buttonElement);
 
-	return liElement;
+  return liElement;
 }
 
 
 // funkce pro smazání úúkolu při kliknutí na tlačítko "x" vedle popisu úkolu
 function odstranUkol() {
-	let index = this.dataset.index;
-	ukoly.splice(index, 1);
+  let index = this.dataset.index;
+  ukoly.splice(index, 1);
 
-	ulozUkoly();
-	zobrazUkoly();
+  ulozUkoly();
+  zobrazUkoly();
 }
 
 
 // funkce pro přidání úkolu do seznamu
 function pridejUkol() {
 
-	let popis = document.querySelector('#popis').value;
-	let dulezitost = document.querySelector('#dulezitost').value;
+  let popis = document.querySelector('#popis').value;
+  let dulezitost = document.querySelector('#dulezitost').value;
 
-	if (popis === '') {
-		alert('Prosím, zadej popis úkolu.');
-		return;
-	}
+  if (popis === '') {
+    alert('Prosím, zadej popis úkolu.');
+    return;
+  }
 
-	let ukol = {};
-	ukol.popis = popis;
-	ukol.dulezitost = dulezitost;
+  let ukol = {};
+  ukol.popis = popis;
+  ukol.dulezitost = dulezitost;
 
-	ukoly.push(ukol);
+  ukoly.push(ukol);
 
-	ulozUkoly();
+  ulozUkoly();
 
-	zobrazUkoly();
+  zobrazUkoly();
 }
